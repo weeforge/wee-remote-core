@@ -12,11 +12,23 @@
 # Wee IDE (pnpm)
 pnpm add github:weeforge/wee-remote-core#v0.1.0
 
-# wee-node / wee-relay (bun)
-bun add github:weeforge/wee-remote-core#v0.1.0
+# wee-node / wee-relay (bun) — repo private ต้องใช้ git+ssh (ดูด้านล่าง)
+bun add "git+ssh://git@github.com/weeforge/wee-remote-core.git#v0.1.0"
 ```
 
-repo เป็น private → เครื่องที่ติดตั้งต้องเข้า GitHub ได้ (`gh auth login` / SSH key / `GITHUB_TOKEN` ใน CI)
+repo เป็น **private** — ทดสอบจริงแล้ว (28 ก.ย. · pnpm 11.23 / bun 1.3.14):
+
+- **pnpm**: `github:weeforge/wee-remote-core#v0.1.0` ใช้ได้ตรง ๆ (pnpm clone ผ่าน git + credential ของเครื่อง เช่น `gh auth setup-git` / keychain)
+- **bun**: `github:…` และ `git+https://…` **ใช้ไม่ได้กับ repo private** — bun แปลงเป็น tarball API ของ GitHub แบบไม่แนบ token (ได้ 404 แม้ตั้ง `GITHUB_TOKEN`) → ใช้ `git+ssh` ซึ่ง bun เรียก `git clone` จริง:
+  ```bash
+  bun add "git+ssh://git@github.com/weeforge/wee-remote-core.git#v0.1.0"
+  ```
+  เครื่องที่ไม่มี SSH key ของ GitHub (เช่น Mac เครื่องนี้) ให้ git แปลง ssh → https เฉพาะคำสั่งนั้น (ไม่แตะ config ถาวร):
+  ```bash
+  GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=url.https://github.com/.insteadOf GIT_CONFIG_VALUE_0=ssh://git@github.com/ \
+    bun add "git+ssh://git@github.com/weeforge/wee-remote-core.git#v0.1.0"
+  ```
+  (ใส่ env ชุดเดียวกันตอน `bun install` บนเครื่องใหม่/CI ด้วย · Docker build ต้องมี credential ของ GitHub ตอน install)
 
 ```ts
 import { historyPage, pageOpts, createLiveNormalizer, pairKey, sealJson, guardPath, RemoteError } from 'wee-remote-core'
