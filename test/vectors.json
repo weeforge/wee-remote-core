@@ -1,0 +1,13 @@
+{
+  "hostPrivHex": "1111111111111111111111111111111111111111111111111111111111111111",
+  "hostPubB64": "e06Qm75//kTEZaIgA31gjuNYl9Me+XLwf3SJLLD3PxM=",
+  "devicePrivHex": "2222222222222222222222222222222222222222222222222222222222222222",
+  "devicePubB64": "D6poTtKIZ7l/Smot7l34zpdOdrcBjj8iocTPJnhXDyA=",
+  "sharedSecretHex": "9e004098efc091d4ec2663b4e9f5cfd4d7064571690b4bea97ab146ab9f35056",
+  "hkdfSalt": "wee-remote-v1",
+  "hkdfInfo": "host-test|dev-test",
+  "keyHex": "049f0316a9b2bd8b59698403b032ab89875b1086a32a4a33611ec799b5d43d94",
+  "nonceHex": "000102030405060708090a0b",
+  "plaintext": "{\"id\":1,\"m\":\"repos.list\",\"p\":{}}",
+  "sealedB64": "AAECAwQFBgcICQoLZ/CWrRI1lOsK997IlMAOitbht6UgC2NM4vIa6co+u6bdQZze96q+KZFbmL0MGdkK"
+}
